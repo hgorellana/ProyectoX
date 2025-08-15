@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gestión de Pedidos | Lácteos El Rodeo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <style>
+    :root {
+      --primary-color: #ffffff;
+    --secondary-color: #f1f1f1;
+      --accent-color: #e74c3c;
+      --light-color: #ecf0f1;
+      --dark-color: #2c3e50;
+      --success-color: #27ae60;
+    }
+    
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin-top: 20px;
+      margin-bottom: 60px;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: rgb(18, 15, 15);
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header h2 {
+      font-weight: 600;
+      margin-bottom: 0;
+    }
+    
+    .form-container {
+      background-color: white;
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+    }
+    
+    .form-label {
+      font-weight: 500;
+      color: var(--dark-color);
+    }
+    
+    .btn-primary {
+      background-color: var(#f5e6ca);
+      border-color: var(--secondary-color);
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    
+    .btn-primary:hover {
+      background-color: #2980b9;
+      border-color: #2980b9;
+      transform: translateY(-2px);
+    }
+    
+    .btn-warning {
+      background-color: #f39c12;
+      border-color: #f39c12;
+    }
+    
+    .resumen {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+    }
+    
+    .resumen h5 {
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--light-color);
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .table-container {
+      background-color: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .table {
+      margin-bottom: 0;
+    }
+    
+    .table thead {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    .table th {
+      font-weight: 500;
+    }
+    
+    .table-hover tbody tr:hover {
+      background-color: rgba(52, 152, 219, 0.1);
+    }
+    
+    .btn-sm {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+    }
+    
+    .btn-danger {
+      background-color: var(--accent-color);
+      border-color: var(--accent-color);
+    }
+    
+    .btn-success {
+      background-color: var(--success-color);
+      border-color: var(--success-color);
+    }
+    
+    footer {
+      background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    
+    .logo {
+      height: 80px;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    }
+    
+    .stat-card {
+      background: #2c5fa8;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      margin-bottom: 15px;
+      border-left: 4px solid var(--secondary-color);
+    }
+    
+    .stat-card h6 {
+      color: #f6f6f6;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    
+    .stat-card p {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 0;
+    }
+    
+    .export-btn-container {
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: flex-end;
+    }
+    
+    @media (max-width: 768px) {
+      .header h2 {
+        font-size: 1.5rem;
+      }
+      
+      .form-container {
+        padding: 15px;
+      }
+      
+      .btn {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      
+      .export-btn-container {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo-container">
+        <img src="logo.png" alt="Logo Lácteos El Rodeo" class="logo">
+      </div>
+      <h2 class="text-center"><i class="bi bi-truck"></i> Sistema de Gestión de Pedidos</h2>
+    </div>
+
+    <div class="form-container">
+      <form id="formPedidos" class="row g-3">
+        <div class="col-md-2">
+          <label class="form-label"><i class="bi bi-calendar"></i> Fecha</label>
+          <input type="date" class="form-control" id="fecha" required />
+        </div>
+        <div class="col-md-2">
+          <label class="form-label"><i class="bi bi-person-badge"></i> Repartidor</label>
+          <input type="text" class="form-control" id="repartidor" required />
+        </div>
+        <div class="col-md-2">
+          <label class="form-label"><i class="bi bi-clock"></i> Hora salida</label>
+          <input type="time" class="form-control" id="horaSalida" required />
+        </div>
+        <div class="col-md-2">
+          <label class="form-label"><i class="bi bi-clock-fill"></i> Hora entrada</label>
+          <input type="time" class="form-control" id="horaEntrada" required />
+        </div>
+        <div class="col-md-2">
+          <label class="form-label"><i class="bi bi-currency-dollar"></i> Monto ($)</label>
+          <input type="number" class="form-control" id="monto" step="0.01" required />
+        </div>
+        <div class="col-md-2">
+          <label class="form-label"><i class="bi bi-person"></i> Cliente</label>
+          <input type="text" class="form-control" id="cliente" required />
+        </div>
+        <div class="col-md-3">
+          <label class="form-label"><i class="bi bi-person-check"></i> Cajero</label>
+          <input type="text" class="form-control" id="cajero" required />
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+          <button type="submit" class="btn btn-primary w-100" id="btnGuardar">
+            <i class="bi bi-save"></i> Registrar Pedido
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="stat-card">
+          <h6>Total esta semana</h6>
+          <p id="totalSemana">$0.00</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="stat-card">
+          <h6>Total este mes</h6>
+          <p id="totalMes">$0.00</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <div class="export-btn-container">
+        <button id="btnExportarExcel" class="btn btn-success">
+          <i class="bi bi-file-earmark-excel"></i> Exportar a Excel
+        </button>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover" id="tablaPedidosCompleta">
+          <thead class="table-dark">
+            <tr>
+              <th><i class="bi bi-calendar"></i> Fecha</th>
+              <th><i class="bi bi-person-badge"></i> Repartidor</th>
+              <th><i class="bi bi-arrow-up-right"></i> Salida</th>
+              <th><i class="bi bi-arrow-down-left"></i> Entrada</th>
+              <th><i class="bi bi-cash-stack"></i> Monto</th>
+              <th><i class="bi bi-person"></i> Cliente</th>
+              <th><i class="bi bi-person-check"></i> Cajero</th>
+              <th><i class="bi bi-gear"></i> Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tablaPedidos"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    © 2025 Sistema de Gestión de Pedidos | Lácteos El Rodeo | Desarrollado por Henry Orellana
+  </footer>
+
+  <script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>
+  <script>
+    const form = document.getElementById('formPedidos');
+    const tabla = document.getElementById('tablaPedidos');
+    const totalSemanaEl = document.getElementById('totalSemana');
+    const totalMesEl = document.getElementById('totalMes');
+    const fechaInput = document.getElementById('fecha');
+    const btnGuardar = document.getElementById('btnGuardar');
+    const btnExportarExcel = document.getElementById('btnExportarExcel');
+
+    let pedidos = JSON.parse(localStorage.getItem('pedidos')) || [];
+    let indexEditando = -1;
+
+    // Establecer fecha actual por defecto
+    const hoy = new Date();
+    fechaInput.value = hoy.toISOString().substr(0, 10);
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const pedido = {
+        fecha: fechaInput.value,
+        repartidor: document.getElementById('repartidor').value.trim(),
+        horaSalida: document.getElementById('horaSalida').value,
+        horaEntrada: document.getElementById('horaEntrada').value,
+        monto: parseFloat(document.getElementById('monto').value),
+        cliente: document.getElementById('cliente').value.trim(),
+        cajero: document.getElementById('cajero').value.trim()
+      };
+
+      if (indexEditando === -1) {
+        pedidos.push(pedido);
+      } else {
+        pedidos[indexEditando] = pedido;
+        indexEditando = -1;
+        btnGuardar.innerHTML = '<i class="bi bi-save"></i> Registrar Pedido';
+      }
+
+      guardarYActualizar();
+      form.reset();
+      fechaInput.value = new Date().toISOString().substr(0, 10);
+    });
+
+    function guardarYActualizar() {
+      localStorage.setItem('pedidos', JSON.stringify(pedidos));
+      mostrarPedidos();
+    }
+
+    function mostrarPedidos() {
+      tabla.innerHTML = '';
+      let totalSemana = 0;
+      let totalMes = 0;
+      const hoy = new Date();
+      const semanaActual = hoy.getWeekNumber();
+      const mesActual = hoy.getMonth();
+
+      // Ordenar pedidos por fecha (más recientes primero)
+      pedidos.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+
+      pedidos.forEach((p, index) => {
+        const fechaPedido = new Date(p.fecha);
+        if (fechaPedido.getWeekNumber() === semanaActual && fechaPedido.getFullYear() === hoy.getFullYear()) {
+          totalSemana += p.monto;
+        }
+        if (fechaPedido.getMonth() === mesActual && fechaPedido.getFullYear() === hoy.getFullYear()) {
+          totalMes += p.monto;
+        }
+
+        // Formatear fecha para mostrarla mejor
+        const fechaFormateada = new Date(p.fecha).toLocaleDateString('es-ES', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric'
+        });
+
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+          <td>${fechaFormateada}</td>
+          <td>${p.repartidor}</td>
+          <td>${p.horaSalida}</td>
+          <td>${p.horaEntrada}</td>
+          <td><span class="badge bg-success">$${p.monto.toFixed(2)}</span></td>
+          <td>${p.cliente}</td>
+          <td>${p.cajero}</td>
+          <td>
+            <button class="btn btn-sm btn-warning btn-editar" data-index="${index}">
+              <i class="bi bi-pencil"></i> Editar
+            </button>
+            <button class="btn btn-sm btn-danger btn-eliminar" data-index="${index}">
+              <i class="bi bi-trash"></i> Eliminar
+            </button>
+          </td>
+        `;
+        tabla.appendChild(fila);
+      });
+
+      totalSemanaEl.textContent = `$${totalSemana.toFixed(2)}`;
+      totalMesEl.textContent = `$${totalMes.toFixed(2)}`;
+
+      // Eventos botones editar
+      document.querySelectorAll('.btn-editar').forEach(btn => {
+        btn.addEventListener('click', e => {
+          const i = parseInt(e.target.closest('button').dataset.index);
+          const p = pedidos[i];
+          document.getElementById('fecha').value = p.fecha;
+          document.getElementById('repartidor').value = p.repartidor;
+          document.getElementById('horaSalida').value = p.horaSalida;
+          document.getElementById('horaEntrada').value = p.horaEntrada;
+          document.getElementById('monto').value = p.monto;
+          document.getElementById('cliente').value = p.cliente;
+          document.getElementById('cajero').value = p.cajero;
+          indexEditando = i;
+          btnGuardar.innerHTML = '<i class="bi bi-arrow-repeat"></i> Actualizar Pedido';
+          
+          // Scroll suave al formulario
+          document.querySelector('.form-container').scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+
+      // Eventos botones eliminar
+      document.querySelectorAll('.btn-eliminar').forEach(btn => {
+        btn.addEventListener('click', e => {
+          const i = parseInt(e.target.closest('button').dataset.index);
+          if (confirm("¿Está seguro que desea eliminar este pedido?")) {
+            pedidos.splice(i, 1);
+            guardarYActualizar();
+          }
+        });
+      });
+    }
+
+    // Función para exportar a Excel
+    btnExportarExcel.addEventListener('click', () => {
+      // Preparamos los datos para el Excel
+      const datosExcel = pedidos.map(pedido => ({
+        'Fecha': new Date(pedido.fecha).toLocaleDateString('es-ES'),
+        'Repartidor': pedido.repartidor,
+        'Hora Salida': pedido.horaSalida,
+        'Hora Entrada': pedido.horaEntrada,
+        'Monto ($)': pedido.monto,
+        'Cliente': pedido.cliente,
+        'Cajero': pedido.cajero
+      }));
+
+      // Creamos la hoja de trabajo
+      const ws = XLSX.utils.json_to_sheet(datosExcel);
+      
+      // Ajustamos el ancho de las columnas
+      ws['!cols'] = [
+        { wch: 12 }, // Fecha
+        { wch: 20 }, // Repartidor
+        { wch: 12 }, // Hora Salida
+        { wch: 12 }, // Hora Entrada
+        { wch: 12 }, // Monto
+        { wch: 25 }, // Cliente
+        { wch: 20 }  // Cajero
+      ];
+      
+      // Creamos el libro de trabajo
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Pedidos");
+      
+      // Generamos el archivo Excel
+      const fechaExportacion = new Date().toISOString().slice(0, 10);
+      XLSX.writeFile(wb, `Pedidos_Lacteos_El_Rodeo_${fechaExportacion}.xlsx`);
+    });
+
+    // Extender Date para obtener número de semana
+    Date.prototype.getWeekNumber = function() {
+      const d = new Date(Date.UTC(this.getFullYear(), this.getMonth(), this.getDate()));
+      const dayNum = d.getUTCDay() || 7;
+      d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+      const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+      return Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+    };
+
+    // Inicializar la tabla
+    mostrarPedidos();
+  </script>
+</body>
+</html>
